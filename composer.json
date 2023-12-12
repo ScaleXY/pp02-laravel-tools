@@ -1,0 +1,30 @@
+{
+    "name": "scalexy/laravel-tools",
+    "description": "Tools for Laravel",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "ScaleXY\\Tools\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Athul Raj",
+            "email": "athul@scalexy.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require-dev": {
+        "laravel/framework": "^10.21"
+    },
+	"extra": {
+		"laravel": {
+			"providers": [
+				"ScaleXY\\Tools\\ScaleXYLaravelToolsServiceProvider"
+			],
+			"aliases": {
+			}
+		}
+	}
+}
