@@ -16,7 +16,8 @@
     ],
     "minimum-stability": "stable",
     "require-dev": {
-        "laravel/framework": "^10.21"
+        "laravel/framework": "^10.21",
+        "spomky-labs/otphp": "^11.2"
     },
 	"extra": {
 		"laravel": {
