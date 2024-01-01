@@ -33,6 +33,14 @@ If there are any security issues, please mail us security@scalexy.com
 
 ## Features implemented
 
-- AutoRunFunctions
-- - AutoRunFunctionToAddMissingUUIDOnCreatingTrait
-- - AutoRunFunctionToAddMissingTOTPKeyOnCreatingTrait
+- Traits
+- - Autorun Functions
+- - - AddMissingUUIDOnCreating
+- - - AddMissingTOTPKeyOnCreating
+- - - HashPasswordOnCreating
+- - - HashPasswordOnUpdating
+- - Exceptions
+- - - FormatExceptionAsJSONForAPI
+
+- Middlewares
+- - FormatAPIResponse
