@@ -4,8 +4,13 @@ namespace ScaleXY\Tools\Support;
 
 class Archive7z extends \Archive7z\Archive7z
 {
-    protected $timeout = 7000;
-    protected $compressionLevel = 9;
-    protected $overwriteMode = self::OVERWRITE_MODE_S;
-    protected $outputDirectory = '/path/to/custom/output/directory';
+	protected ?float $timeout = 7000;
+	// protected int $compressionLevel = 9;
+	// protected string $overwriteMode = self::OVERWRITE_MODE_S;
+	// protected string $outputDirectory = '/path/to/custom/output/directory';
+
+	public function setCompression($compressionLevel)
+	{
+		$this->compressionLevel = $compressionLevel;
+	}
 }
