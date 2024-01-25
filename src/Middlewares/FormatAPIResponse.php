@@ -12,11 +12,17 @@ class FormatAPIResponse
     {
         $response = $next($request);
 		$resp_payload = $response->original;
-		if(is_array($resp_payload))
-			if(array_key_exists("result", $resp_payload))
+		if (is_array($resp_payload)) {
+			if (array_key_exists("result", $resp_payload))
 				return response()->json($resp_payload);
+			if (array_key_exists("message", $resp_payload)) {
+				$message = $resp_payload["message"];
+				unset($resp_payload["message"]);
+			}
+		}
 		return response()->json([
 			"result"	=> true,
+			"message"	=> $message,
 			"data"		=> $resp_payload,
 		]);
     }

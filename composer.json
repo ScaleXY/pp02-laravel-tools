@@ -17,8 +17,7 @@
     "minimum-stability": "stable",
     "require-dev": {
         "laravel/framework": "^10.21",
-        "spomky-labs/otphp": "^11.2",
-        "gemorroj/archive7z": "^5.7"
+        "spomky-labs/otphp": "^11.2"
     },
 	"extra": {
 		"laravel": {
