@@ -22,7 +22,7 @@ class FormatAPIResponse
 		}
 		return response()->json([
 			"result"	=> true,
-			"message"	=> $message,
+			"message"	=> $message ?? "Request successful",
 			"data"		=> $resp_payload,
 		]);
     }
