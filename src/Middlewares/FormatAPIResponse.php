@@ -13,6 +13,8 @@ class FormatAPIResponse
         $response = $next($request);
 		$resp_payload = $response->original;
 		if (is_array($resp_payload)) {
+			if (array_key_exists("raw_response", $resp_payload))
+				return response()->json($resp_payload['raw_response']);
 			if (array_key_exists("result", $resp_payload))
 				return response()->json($resp_payload);
 			if (array_key_exists("message", $resp_payload)) {
