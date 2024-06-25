@@ -4,7 +4,7 @@ namespace ScaleXY\Tools\Filament;
 
 class Columns
 {
-    public function UUIDColumn()
+    public static function UUIDColumn()
     {
         return \Filament\Tables\Columns\TextColumn::make('uuid')
             ->label('UUID')
