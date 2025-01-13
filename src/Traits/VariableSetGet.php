@@ -17,4 +17,8 @@ trait VariableSetGet
     {
         return self::where('key', $key)->first()->value ?? $value;
     }
+    public static function hasValue(string $key)
+    {
+        return self::where('key', $key)->count() > 0;
+    }
 }
