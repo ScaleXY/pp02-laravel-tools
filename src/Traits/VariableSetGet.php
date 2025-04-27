@@ -4,18 +4,31 @@ namespace ScaleXY\Tools\Traits;
 
 trait VariableSetGet
 {
+    public static function getValue(string $key, $value)
+    {
+		$singletonInstance = app(self::class);
+
+        if (! isset($singletonInstance->cacheStore[$key])) {
+            $singletonInstance->cacheStore[$key] = self::where('key', $key)->first()->value
+                ?? $value
+                ?? self::failOverValue($key);
+        }
+
+        return $singletonInstance->cacheStore[$key];
+    }
+
     public static function setValue(string $key, $value)
     {
-        return self::updateOrCreate([
+        self::updateOrCreate([
             'key' => $key,
         ], [
             'value' => $value,
         ])->value;
-    }
+		$singletonInstance = app(self::class);
 
-    public static function getValue(string $key, $value)
-    {
-        return self::where('key', $key)->first()->value ?? $value;
+		$singletonInstance->cacheStore[$key] = $value;
+
+		return $value;
     }
 
     public static function getInstance(string $key)
