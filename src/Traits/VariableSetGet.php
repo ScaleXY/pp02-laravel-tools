@@ -4,7 +4,7 @@ namespace ScaleXY\Tools\Traits;
 
 trait VariableSetGet
 {
-    public static function getValue(string $key, $value)
+    public static function getValue(string $key, $value = null)
     {
 		$singletonInstance = app(self::class);
 
