@@ -1,15 +1,18 @@
 <?php
 
-namespace ScaleXY\Tools\Traits;
+namespace ScaleXY\Tools\Traits\Tenant;
 
 trait VariableSetGet
 {
     public static function getValue(string $key, $value = null)
     {
         $singletonInstance = app(self::class);
+        if (! isset($singletonInstance->cacheStore[tenant('id')])) {
+            $singletonInstance->cacheStore[tenant('id')] = [];
+        }
 
-        if (! isset($singletonInstance->cacheStore[$key])) {
-            $singletonInstance->cacheStore[$key] = self::where('key', $key)->first()->value
+        if (! isset($singletonInstance->cacheStore[tenant('id')][$key])) {
+            $singletonInstance->cacheStore[tenant('id')][$key] = self::where('key', $key)->first()->value
                 ?? $value
                 ?? self::failOverValue($key);
         }
@@ -26,7 +29,7 @@ trait VariableSetGet
         ])->value;
         $singletonInstance = app(self::class);
 
-        $singletonInstance->cacheStore[$key] = $value;
+        $singletonInstance->cacheStore[tenant('id')][$key] = $value;
 
         return $value;
     }
