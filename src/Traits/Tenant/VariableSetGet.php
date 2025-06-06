@@ -17,7 +17,7 @@ trait VariableSetGet
                 ?? self::failOverValue($key);
         }
 
-        return $singletonInstance->cacheStore[$key];
+        return $singletonInstance->cacheStore[tenant('id')][$key];
     }
 
     public static function setValue(string $key, $value)
