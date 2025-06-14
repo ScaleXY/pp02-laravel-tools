@@ -6,7 +6,7 @@ trait MorphableIdentifiers
 {
     public function getMorphLabel()
     {
-        $returnValue = basename(self).' ['.$this->getKey().']';
+        $returnValue = basename($this).' ['.$this->getKey().']';
         if (method_exists($this, 'getLabel')) {
             $returnValue .= ' '.$this->getLabel();
         }
