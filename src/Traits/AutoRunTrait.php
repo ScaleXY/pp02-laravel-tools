@@ -2,33 +2,36 @@
 
 namespace ScaleXY\Tools\Traits;
 
+use ReflectionClass;
+use ScaleXY\Tools\Attributes\AutoRun;
+
 trait AutoRunTrait
 {
     protected static function booted()
     {
-        $runAutoRunFunctions = static function ($instance, string $suffix, ?string $alternateSuffix = null): void {
-            static $methodsByClass = [];
+        $methodsByEvent = [];
+        $registeredMethods = [];
 
-            $class = get_class($instance);
-            $methods = $methodsByClass[$class] ??= array_values(array_filter(
-                get_class_methods($instance),
-                static fn (string $method): bool => str_starts_with($method, 'AutoRunFunctionTo')
-            ));
+        foreach ((new ReflectionClass(static::class))->getMethods() as $method) {
+            foreach ($method->getAttributes(AutoRun::class) as $attribute) {
+                foreach ($attribute->newInstance()->lifecycleEvents() as $event) {
+                    $methodName = $method->getName();
 
-            foreach ($methods as $method) {
-                if (str_ends_with($method, $suffix)
-                    || ($alternateSuffix !== null && str_ends_with($method, $alternateSuffix))) {
-                    $instance->{$method}($instance);
+                    if (isset($registeredMethods[$event][$methodName])) {
+                        continue;
+                    }
+
+                    $methodsByEvent[$event][] = $method;
+                    $registeredMethods[$event][$methodName] = true;
                 }
             }
-        };
+        }
 
         foreach (['creating', 'created', 'updating', 'updated', 'deleting', 'deleted'] as $event) {
-            $suffix = 'On'.ucfirst($event);
-            $alternateSuffix = str_ends_with($event, 'ing') ? 'OnMutating' : 'OnMutated';
-
-            static::{$event}(function ($instance) use ($runAutoRunFunctions, $suffix, $alternateSuffix): void {
-                $runAutoRunFunctions($instance, $suffix, $alternateSuffix);
+            static::{$event}(function ($instance) use ($methodsByEvent, $event): void {
+                foreach ($methodsByEvent[$event] ?? [] as $method) {
+                    $method->invoke($instance, $instance);
+                }
             });
         }
     }

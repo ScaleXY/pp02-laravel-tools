@@ -2,8 +2,11 @@
 
 namespace ScaleXY\Tools\Traits;
 
+use ScaleXY\Tools\Attributes\AutoRun;
+
 trait AutoRunFunctionToHashPasswordOnUpdatingTrait
 {
+    #[AutoRun('updating')]
     public function AutoRunFunctionToHashPasswordOnUpdating($instance)
     {
         if (strlen($instance->Password) > 0) {

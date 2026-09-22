@@ -44,3 +44,31 @@ If there are any security issues, please mail us security@scalexy.com
 
 - Middlewares
 - - FormatAPIResponse
+
+## Auto-run methods
+
+Use the `AutoRun` attribute with `AutoRunTrait` to run a model method during an Eloquent lifecycle event. Methods can be public, protected, or private, and may accept the model instance as an optional argument.
+
+```php
+use ScaleXY\Tools\Attributes\AutoRun;
+use ScaleXY\Tools\Traits\AutoRunTrait;
+
+class User extends Model
+{
+    use AutoRunTrait;
+
+    #[AutoRun('creating')]
+    protected function setDefaults(): void
+    {
+        // ...
+    }
+
+    #[AutoRun('updating', 'updated')]
+    protected function syncSearchIndex($user): void
+    {
+        // ...
+    }
+}
+```
+
+Supported events are `creating`, `created`, `updating`, `updated`, `deleting`, and `deleted`. The `mutating` alias runs for all `*ing` events, while `mutated` runs for all `*ed` events.
